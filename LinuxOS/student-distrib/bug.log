@@ -1,0 +1,215 @@
+<=========================================================>
+<=================>    BUG LOG HEADER   <=================>
+<=========================================================>
+Assignment:
+    MP3
+CheckPoint:
+    CP1
+CreateTime:
+    2022.10.16
+
+<--------------------------------------------------------->
+                          BUG 1                          
+<--------------------------------------------------------->
+Time:
+    2022.10.16.
+Creator:
+    Dinal Gunaratne.
+Description:
+    OS is stuck in boot loop due to IDT setup.
+Solution:
+    Set the present bit to 0 for IDT vector 15.
+
+<--------------------------------------------------------->
+                          BUG 2                          
+<--------------------------------------------------------->
+Time:
+    2022.10.16.
+Creator:
+    Nikil Nambiar.
+Description:
+    IDT initialization not happening due to init function not existing.
+Solution:
+    Took out the include idt.h from the wrappers ASM file.
+
+<--------------------------------------------------------->
+                          BUG 3                          
+<--------------------------------------------------------->
+Time:
+    2022.10.16.
+Creator:
+    Raj Baala.
+Description:
+    Keyboard printing spaces between each character on press and release.
+Solution:
+    Included a conditional statement for putc that only allows that to happen on press.
+
+<--------------------------------------------------------->
+                          BUG 4                          
+<--------------------------------------------------------->
+Time:
+    2022.10.16.
+Creator:
+    Aryan Gupta.
+Description:
+    Interrupts not being enabled.
+Solution:
+    Had to uncomment an sti command in kernel.c.
+
+<--------------------------------------------------------->
+                          BUG 5                          
+<--------------------------------------------------------->
+Time:
+    2022.10.16.
+Creator:
+    Dinal Gunaratne.
+Description:
+    Paging causing boot loop.
+Solution:
+    Set the bits correctly for page directory entry for the 4MB kernel page.
+
+<--------------------------------------------------------->
+                          BUG 6                          
+<--------------------------------------------------------->
+Time:
+    2022.10.16.
+Creator:
+    Nikil Nambiar.
+Description:
+    Paging not being enabled for 4MB page.
+Solution:
+    Had to load the cr4 register in enablePaging assembly code.
+
+<--------------------------------------------------------->
+                          BUG 7                          
+<--------------------------------------------------------->
+Time:
+    2022.10.16.
+Creator:
+    Raj Baala.
+Description:
+    Structs for PDE's and PTE's not functioning correctly.
+Solution:
+    Made the structs packed instead of aligned.
+
+<--------------------------------------------------------->
+                          BUG 8                          
+<--------------------------------------------------------->
+Time:
+    2022.10.16.
+Creator:
+    Aryan Gupta.
+Description:
+    Keyboard keys are off by 1 letter on screen.
+Solution:
+    Forgot the character for 'i' in the map of keys.
+<--------------------------------------------------------->
+                          BUG 9                          
+<--------------------------------------------------------->
+Time:
+    2022.10.23.
+Creator:
+    Dinal Gunaratne.
+Description:
+    Enter can't be pressed when buffer is full
+Solution:
+    Cap the typing into keyboard buffer at 127 to leave last space for Enter
+
+<--------------------------------------------------------->
+                          BUG 10                          
+<--------------------------------------------------------->
+Time:
+    2022.10.23.
+Creator:
+    Nikil Nambiar.
+Description:
+    Missing some edge cases when dealing with shift and caps lock such as shifting while having caps lock and also making sure not to shift numbers when 
+    caps lock is on.
+Solution:
+    Implemented switch case with caps lock conditional
+
+<--------------------------------------------------------->
+                          BUG 11                          
+<--------------------------------------------------------->
+Time:
+    2022.10.23.
+Creator:
+    Dinal Gunaratne.
+Description:
+    We were printing out to much in terminal write when since the buffer wasn't getting cleared.
+Solution:
+    Cleared the terminal buffer and also made sure to return the correct number of bytes in terminal read so that terminal write wouldn't print out
+    extra 
+<--------------------------------------------------------->
+                          BUG 12                          
+<--------------------------------------------------------->
+Time:
+    2022.10.23.
+Creator:
+    Nikil Nambiar.
+Description:
+    Missed some edge cases when dealing with PUTC for backspaces and tabs. Lot of cases with when to use backspaces and tabs
+    that have should have different results.
+Solution:
+    Dealt with it by creaing conditionals and adding conditinals in PUTC 
+
+<--------------------------------------------------------->
+                          BUG 13                          
+<--------------------------------------------------------->
+Time:
+    2022.10.23.
+Creator:
+    Dinal Gunaratne.
+Description:
+    Nothing was outputting to the terminal buffer, so we were running into page fault exceptions
+Solution:
+    Didnt have cli() and sti() in terminal write so in interrupts were able to mess up with terminal write
+
+<--------------------------------------------------------->
+                          BUG 14                          
+<--------------------------------------------------------->
+Time:
+    2022.10.23.
+Creator:
+    Aryan Gupta.
+Description:
+    Changing the frequency wasn't changing the frequency for the rtc
+Solution:
+    We want the rate to be 6 if it is less than 6, but we were setting the rate to be 6 if it was greater than 6
+
+<--------------------------------------------------------->
+                          BUG 15                          
+<--------------------------------------------------------->
+Time:
+    2022.12.03.
+Creator:
+    Aryan Gupta.
+Description:
+    Our ls would page fault instantly
+Solution:
+    When remapping the pid map, we incorrectly shifted the bits and that caused it to page fault
+
+<--------------------------------------------------------->
+                          BUG 16                          
+<--------------------------------------------------------->
+Time:
+    2022.12.03.
+Creator:
+    Aryan Gupta.
+Description:
+    Our keyboard would not correctly write on the correct terminal
+Solution:
+    We did not correctly manage the buffer for the active buffer
+
+
+
+
+
+
+
+
+
+
+
+
+
